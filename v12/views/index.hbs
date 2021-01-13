@@ -3,7 +3,7 @@
 <h2>Upload File to share:</h2>
 <form id="upload-form" action="/" method="POST" enctype="multipart/form-data">
   <div class="upload-container"><input id="file-picker" type="file" name="image"></div>
-  <div><input type="submit" value="Upload Image"></div>
+  <div><input type="submit" value="Upload & Generate SAS"></div>
 </form>
 
 <p id="message">{{message}}</p>
@@ -16,7 +16,7 @@
 {{/each}}
 </ul>
 <hr>
-<p>This app has no official privacy policy. Your data will be uploaded to a service in order to produce a thumbnail. Your images will be public once you upload them and there is no automated way to remove them.</p>
+<p>This app has no official privacy policy. Your data will be uploaded to a storage service in order to produce a SAS link. Data will be removed by blob policy.</p>
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
