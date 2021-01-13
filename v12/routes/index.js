@@ -41,8 +41,8 @@ const getBlobName = originalName => {
 };
 
 const generateSasToken = (container, blobName) => {
-  var connString = process.env.AzureWebJobsStorage;
-  var blobService = azure.createBlobService(connString);
+  var storageConnString = `DefaultEndpointsProtocol=https;AccountName=${process.env.AZURE_STORAGE_ACCOUNT_NAME};AccountKey=${process.env.AZURE_STORAGE_ACCOUNT_ACCESS_KEY};EndpointSuffix=core.windows.net`;
+  var blobService = azure.createBlobService(storageConnString);
 
   // Create a SAS token that expires in an hour
   // Set start time to five minutes ago to avoid clock skew.
