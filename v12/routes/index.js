@@ -64,36 +64,15 @@ const generateSasToken = (containerName, blobName) => {
   var sasToken = blobService.generateSharedAccessSignature(containerName, blobName, sharedAccessPolicy);
 
   return blobService.getUrl(containerName, blobName, sasToken, true);
-
-    // Generate service level SAS for a blob
-  // var blobSAS = generateBlobSASQueryParameters({
-  //   containerName, // Required
-  //   blobName, // Required
-  //   permissions: BlobSASPermissions.parse("racwd"), // Required
-  //   startsOn: new Date(), // Optional
-  //   expiresOn: new Date(new Date().valueOf() + (3*86400)), // Required. Date type
-  //   cacheControl: "cache-control-override", // Optional
-  //   contentDisposition: "content-disposition-override", // Optional
-  //   contentEncoding: "content-encoding-override", // Optional
-  //   contentLanguage: "content-language-override", // Optional
-  //   contentType: "content-type-override", // Optional
-  //   ipRange: { start: "0.0.0.0", end: "255.255.255.255" }, // Optional
-  //   protocol: SASProtocol.HttpsAndHttp, // Optional
-  //   version: "2016-05-31" // Optional
-  // },
-  // sharedKeyCredential // StorageSharedKeyCredential - `new StorageSharedKeyCredential(account, accountKey)`
-  // ).toString();
-
-  // return blobSAS; 
 }
 
-
+// Function on page render
 router.get('/', async (req, res, next) => {
 
   let viewData;
 
   try {
-    const containerClient = blobServiceClient.getContainerClient(containerName1);
+    const containerClient = blobServiceClient.getContainerClient(containerName2);
     const listBlobsResponse = await containerClient.listBlobFlatSegment();
 
     for await (const blob of listBlobsResponse.segment.blobItems) {
@@ -104,7 +83,7 @@ router.get('/', async (req, res, next) => {
       title: 'Home',
       viewName: 'index',
       accountName: process.env.AZURE_STORAGE_ACCOUNT_NAME,
-      containerName: containerName1
+      containerName: containerName2
     };
 
     if (listBlobsResponse.segment.blobItems.length) {
@@ -123,6 +102,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+// Function on form submit
 router.post('/', uploadStrategy, async (req, res) => {
   const blobName = getBlobName(req.file.originalname);
   const stream = getStream(req.file.buffer);
