@@ -61,7 +61,7 @@ const generateSasToken = (containerName, blobName) => {
       }
   };
   
-  var sasToken = blobService.generateSharedAccessSignature(container, blobName, sharedAccessPolicy);
+  var sasToken = blobService.generateSharedAccessSignature(containerName, blobName, sharedAccessPolicy);
 
   return blobService.getUrl(container, blobName, sasToken, true);
 
