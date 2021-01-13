@@ -1,25 +1,21 @@
 
 <div class="login-box">
-<h2>File Quick</h2>
-
 <h2>Upload File to share:</h2>
 <form id="upload-form" action="/" method="POST" enctype="multipart/form-data">
   <div class="user-box"><input id="file-picker" type="file" name="image"></div>
-
     <a href="javascript:;" onclick="document.getElementById('upload-form').submit();">
       <span></span>
       <span></span>
       <span></span>
       <span></span>
-      Submit
+      Generate
     </a>
 </form>
 
 
 <p id="message">{{message}}</p>
-
 <hr>
-<p>This app has no official privacy policy. Your data will be uploaded to a storage service in order to produce a SAS link. Data will be removed by blob policy.</p>
+<p>This app uploads a file to the blob storage and generates SAS URL with 72 hours duration. Simply upload your file and grab your SAS URL to share the file. Files are automatically deelted after 30 days.</p>
 </div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
