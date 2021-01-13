@@ -5,8 +5,7 @@ if (process.env.NODE_ENV !== 'production') {
 const {
   BlobServiceClient,
   StorageSharedKeyCredential,
-  newPipeline,
-  generateBlobSASQueryParameters
+  newPipeline
 } = require('@azure/storage-blob');
 
 const express = require('express');
@@ -21,7 +20,7 @@ const ONE_MEGABYTE = 1024 * 1024;
 const uploadOptions = { bufferSize: 4 * ONE_MEGABYTE, maxBuffers: 20 };
 const ONE_MINUTE = 60 * 1000;
 
-// const azure = require('azure-storage');
+const azure = require('azure-storage');
 
 const sharedKeyCredential = new StorageSharedKeyCredential(
   process.env.AZURE_STORAGE_ACCOUNT_NAME,
@@ -41,51 +40,51 @@ const getBlobName = originalName => {
 };
 
 const generateSasToken = (containerName, blobName) => {
-  // var storageConnString = `DefaultEndpointsProtocol=https;AccountName=${process.env.AZURE_STORAGE_ACCOUNT_NAME};AccountKey=${process.env.AZURE_STORAGE_ACCOUNT_ACCESS_KEY};EndpointSuffix=core.windows.net`;
+  var storageConnString = `DefaultEndpointsProtocol=https;AccountName=${process.env.AZURE_STORAGE_ACCOUNT_NAME};AccountKey=${process.env.AZURE_STORAGE_ACCOUNT_ACCESS_KEY};EndpointSuffix=core.windows.net`;
 
-  // var blobService = azure.createBlobService(storageConnString);
+  var blobService = azure.createBlobService(storageConnString);
 
-  // // Create a SAS token that expires in an hour
-  // // Set start time to five minutes ago to avoid clock skew.
-  // var startDate = new Date();
-  // startDate.setMinutes(startDate.getMinutes() - 5);
-  // var expiryDate = new Date(startDate);
-  // expiryDate.setHours(startDate.getHours() + 72);
+  // Create a SAS token that expires in an hour
+  // Set start time to five minutes ago to avoid clock skew.
+  var startDate = new Date();
+  startDate.setMinutes(startDate.getMinutes() - 5);
+  var expiryDate = new Date(startDate);
+  expiryDate.setHours(startDate.getHours() + 72);
 
-  // permissions = azure.BlobUtilities.SharedAccessPermissions.READ;
+  permissions = azure.BlobUtilities.SharedAccessPermissions.READ;
 
-  // var sharedAccessPolicy = {
-  //     AccessPolicy: {
-  //         Permissions: permissions,
-  //         Start: startDate,
-  //         Expiry: expiryDate
-  //     }
-  // };
+  var sharedAccessPolicy = {
+      AccessPolicy: {
+          Permissions: permissions,
+          Start: startDate,
+          Expiry: expiryDate
+      }
+  };
   
-  // var sasToken = blobService.generateSharedAccessSignature(container, blobName, sharedAccessPolicy);
+  var sasToken = blobService.generateSharedAccessSignature(container, blobName, sharedAccessPolicy);
 
-  // // return blobService.getUrl(container, blobName, sasToken, true);
+  return blobService.getUrl(container, blobName, sasToken, true);
 
     // Generate service level SAS for a blob
-  var blobSAS = generateBlobSASQueryParameters({
-    containerName, // Required
-    blobName, // Required
-    permissions: BlobSASPermissions.parse("racwd"), // Required
-    startsOn: new Date(), // Optional
-    expiresOn: new Date(new Date().valueOf() + (3*86400)), // Required. Date type
-    cacheControl: "cache-control-override", // Optional
-    contentDisposition: "content-disposition-override", // Optional
-    contentEncoding: "content-encoding-override", // Optional
-    contentLanguage: "content-language-override", // Optional
-    contentType: "content-type-override", // Optional
-    ipRange: { start: "0.0.0.0", end: "255.255.255.255" }, // Optional
-    protocol: SASProtocol.HttpsAndHttp, // Optional
-    version: "2016-05-31" // Optional
-  },
-  sharedKeyCredential // StorageSharedKeyCredential - `new StorageSharedKeyCredential(account, accountKey)`
-  ).toString();
+  // var blobSAS = generateBlobSASQueryParameters({
+  //   containerName, // Required
+  //   blobName, // Required
+  //   permissions: BlobSASPermissions.parse("racwd"), // Required
+  //   startsOn: new Date(), // Optional
+  //   expiresOn: new Date(new Date().valueOf() + (3*86400)), // Required. Date type
+  //   cacheControl: "cache-control-override", // Optional
+  //   contentDisposition: "content-disposition-override", // Optional
+  //   contentEncoding: "content-encoding-override", // Optional
+  //   contentLanguage: "content-language-override", // Optional
+  //   contentType: "content-type-override", // Optional
+  //   ipRange: { start: "0.0.0.0", end: "255.255.255.255" }, // Optional
+  //   protocol: SASProtocol.HttpsAndHttp, // Optional
+  //   version: "2016-05-31" // Optional
+  // },
+  // sharedKeyCredential // StorageSharedKeyCredential - `new StorageSharedKeyCredential(account, accountKey)`
+  // ).toString();
 
-  return blobSAS; 
+  // return blobSAS; 
 }
 
 
