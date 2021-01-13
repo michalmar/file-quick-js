@@ -5,7 +5,8 @@ if (process.env.NODE_ENV !== 'production') {
 const {
   BlobServiceClient,
   StorageSharedKeyCredential,
-  newPipeline
+  newPipeline,
+  generateBlobSASQueryParameters
 } = require('@azure/storage-blob');
 
 const express = require('express');
@@ -66,7 +67,7 @@ const generateSasToken = (containerName, blobName) => {
   // // return blobService.getUrl(container, blobName, sasToken, true);
 
     // Generate service level SAS for a blob
-  var blobSAS = generateBlobSASQueryParameters({
+  var blobSAS = blobServiceClient.generateBlobSASQueryParameters({
     containerName, // Required
     blobName, // Required
     permissions: BlobSASPermissions.parse("racwd"), // Required
