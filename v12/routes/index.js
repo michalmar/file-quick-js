@@ -67,7 +67,7 @@ const generateSasToken = (containerName, blobName) => {
   // // return blobService.getUrl(container, blobName, sasToken, true);
 
     // Generate service level SAS for a blob
-  var blobSAS = blobServiceClient.generateBlobSASQueryParameters({
+  var blobSAS = generateBlobSASQueryParameters({
     containerName, // Required
     blobName, // Required
     permissions: BlobSASPermissions.parse("racwd"), // Required
