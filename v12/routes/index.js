@@ -5,7 +5,8 @@ if (process.env.NODE_ENV !== 'production') {
 const {
   BlobServiceClient,
   StorageSharedKeyCredential,
-  newPipeline
+  newPipeline,
+  azure
 } = require('@azure/storage-blob');
 
 const express = require('express');
@@ -20,7 +21,7 @@ const ONE_MEGABYTE = 1024 * 1024;
 const uploadOptions = { bufferSize: 4 * ONE_MEGABYTE, maxBuffers: 20 };
 const ONE_MINUTE = 60 * 1000;
 
-var azure = require('azure-storage');
+// var azure = require('azure-storage');
 
 const sharedKeyCredential = new StorageSharedKeyCredential(
   process.env.AZURE_STORAGE_ACCOUNT_NAME,
