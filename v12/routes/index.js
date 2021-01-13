@@ -111,8 +111,7 @@ router.post('/', uploadStrategy, async (req, res) => {
 
   try {
     await blockBlobClient.uploadStream(stream,
-      uploadOptions.bufferSize, uploadOptions.maxBuffers,
-      { blobHTTPHeaders: { blobContentType: "image/jpeg" } });
+      uploadOptions.bufferSize, uploadOptions.maxBuffers);
     
     sasURL = generateSasToken(containerName2, blobName)
     // res.render('success', { message: 'File uploaded to Azure Blob storage.' });
