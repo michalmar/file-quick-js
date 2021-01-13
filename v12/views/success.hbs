@@ -1,5 +1,35 @@
-<h1>Success!</h1>
+<div class="login-box">
+  <h2>Success!</h2>
+  <h2>Grab your SAS link:</h2>
+    <div class="user-box">
+               
+        <!-- Target -->
+        <input
+        id="text_input"
+        class="text_input"
+        type="text"
+        value="{{message}}"
+        />
 
-<p>{{message}}</p>
+        <!-- Trigger -->
+        <button class="btn" id="btn">
+        COPY
+        </button>
+    </div>
+    
+</div>
 
-<a href="/">Return home to view thumbnails</a>
+
+<script>
+const input = document.getElementById("text_input");
+const btn = document.getElementById("btn");
+
+btn.addEventListener("click", copyText);
+
+// CopyText Function
+function copyText() {
+  input.select();
+  document.execCommand("copy");
+  btn.innerHTML = "Copied!";
+}
+</script>

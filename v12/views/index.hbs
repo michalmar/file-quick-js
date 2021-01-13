@@ -1,23 +1,26 @@
-<h1>File Quick</h1>
+
+<div class="login-box">
+<h2>File Quick</h2>
 
 <h2>Upload File to share:</h2>
 <form id="upload-form" action="/" method="POST" enctype="multipart/form-data">
-  <div class="upload-container"><input id="file-picker" type="file" name="image"></div>
-  <div><input type="submit" value="Upload & Generate SAS"></div>
+  <div class="user-box"><input id="file-picker" type="file" name="image"></div>
+
+    <a href="javascript:;" onclick="document.getElementById('upload-form').submit();">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      Submit
+    </a>
 </form>
+
 
 <p id="message">{{message}}</p>
 
-<h2>Uploaded files</h2>
-<ul>
-{{#each this.thumbnails}}
-  {{!-- <img src="https://{{../accountName}}.blob.core.windows.net/{{../containerName}}/{{name}}"> --}}
-  <li>{{name}}</li>
-{{/each}}
-</ul>
 <hr>
 <p>This app has no official privacy policy. Your data will be uploaded to a storage service in order to produce a SAS link. Data will be removed by blob policy.</p>
-
+</div>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
 
