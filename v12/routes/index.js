@@ -37,6 +37,33 @@ const getBlobName = originalName => {
   return `${identifier}-${originalName}`;
 };
 
+const generateSasToken = (container, blobName) => {
+  var connString = process.env.AzureWebJobsStorage;
+  var blobService = azure.createBlobService(connString);
+
+  // Create a SAS token that expires in an hour
+  // Set start time to five minutes ago to avoid clock skew.
+  var startDate = new Date();
+  startDate.setMinutes(startDate.getMinutes() - 5);
+  var expiryDate = new Date(startDate);
+  expiryDate.setHours(startDate.getHours() + 72);
+
+  permissions = azure.BlobUtilities.SharedAccessPermissions.READ;
+
+  var sharedAccessPolicy = {
+      AccessPolicy: {
+          Permissions: permissions,
+          Start: startDate,
+          Expiry: expiryDate
+      }
+  };
+  
+  var sasToken = blobService.generateSharedAccessSignature(container, blobName, sharedAccessPolicy);
+  
+  return blobService.getUrl(container, blobName, sasToken, true);
+}
+
+
 router.get('/', async (req, res, next) => {
 
   let viewData;
@@ -82,7 +109,11 @@ router.post('/', uploadStrategy, async (req, res) => {
     await blockBlobClient.uploadStream(stream,
       uploadOptions.bufferSize, uploadOptions.maxBuffers,
       { blobHTTPHeaders: { blobContentType: "image/jpeg" } });
-    res.render('success', { message: 'File uploaded to Azure Blob storage.' });
+    
+    sasURL = generateSasToken(containerName2, blobName)
+    // res.render('success', { message: 'File uploaded to Azure Blob storage.' });
+    res.render('success', { message: sasURL });
+    
   } catch (err) {
     res.render('error', { message: err.message });
   }
