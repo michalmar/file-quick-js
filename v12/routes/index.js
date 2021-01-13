@@ -63,7 +63,7 @@ const generateSasToken = (containerName, blobName) => {
   
   var sasToken = blobService.generateSharedAccessSignature(containerName, blobName, sharedAccessPolicy);
 
-  return blobService.getUrl(container, blobName, sasToken, true);
+  return blobService.getUrl(containerName, blobName, sasToken, true);
 
     // Generate service level SAS for a blob
   // var blobSAS = generateBlobSASQueryParameters({
