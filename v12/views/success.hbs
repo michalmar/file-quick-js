@@ -6,7 +6,7 @@
         <!-- Target -->
         <input
         id="text_input"
-        class="text_input"
+        class="sas"
         type="text"
         value="{{message}}"
         />
@@ -15,8 +15,9 @@
         <button class="btn" id="btn">
         COPY
         </button>
+        <form><a href="/">Home</a></form>
     </div>
-    <form><a href="/">Home</a></form>
+    
 </div>
 
 
@@ -30,6 +31,6 @@ btn.addEventListener("click", copyText);
 function copyText() {
   input.select();
   document.execCommand("copy");
-  btn.innerHTML = "Copied!";
+  btn.innerHTML = "Done";
 }
 </script>
