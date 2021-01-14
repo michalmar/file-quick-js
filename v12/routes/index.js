@@ -72,12 +72,12 @@ router.get('/', async (req, res, next) => {
   let viewData;
 
   try {
-    const containerClient = blobServiceClient.getContainerClient(containerName2);
-    const listBlobsResponse = await containerClient.listBlobFlatSegment();
+    // const containerClient = blobServiceClient.getContainerClient(containerName2);
+    // const listBlobsResponse = await containerClient.listBlobFlatSegment();
 
-    for await (const blob of listBlobsResponse.segment.blobItems) {
-      console.log(`Blob: ${blob.name}`);
-    }
+    // for await (const blob of listBlobsResponse.segment.blobItems) {
+    //   console.log(`Blob: ${blob.name}`);
+    // }
 
     viewData = {
       title: 'Home',
@@ -86,9 +86,9 @@ router.get('/', async (req, res, next) => {
       containerName: containerName2
     };
 
-    if (listBlobsResponse.segment.blobItems.length) {
-      viewData.thumbnails = listBlobsResponse.segment.blobItems;
-    }
+    // if (listBlobsResponse.segment.blobItems.length) {
+    //   viewData.thumbnails = listBlobsResponse.segment.blobItems;
+    // }
   } catch (err) {
     viewData = {
       title: 'Error',
@@ -100,6 +100,8 @@ router.get('/', async (req, res, next) => {
   } finally {
     res.render(viewData.viewName, viewData);
   }
+
+  // res.render(viewData.viewName, viewData);
 });
 
 // Function on form submit
